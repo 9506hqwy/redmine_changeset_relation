@@ -1,0 +1,58 @@
+<!-- プロジェクト設定のリポジトリタブ表示 -->
+<%
+   if @project.present? &&
+      controller &&
+      controller.class.name == 'ProjectsController' &&
+      controller.action_name == 'settings'
+%>
+
+<%
+   setting =  @project.changeset_relation_setting || ChangesetRelationSetting.new
+
+   custom_fields = CustomField.where(type: 'IssueCustomField', is_for_all: true)
+   custom_fields |= @project.issue_custom_fields
+   custom_fields.sort_by!{ |c| c.name }
+%>
+
+<%= form_tag({controller: :changeset_relation_settings, action: :update, project_id: @project.id},
+             id: 'changeset_relation_setting',
+             method: 'PUT') do %>
+
+<div class="box">
+  <p>
+    <label for="changeset_relation_id"><%= l(:label_changeset_relation_id) %>:</label>
+    <%= hidden_field_tag('changeset_relation_rescan', 'false') %>
+    <%= select_tag('changeset_relation_id',
+                   options_for_select(custom_fields.collect {|c| [c.name, c.id]}, setting.custom_field_id),
+                   include_blank: true)  %>
+  </p>
+</div>
+
+<p>
+  <%= submit_tag l(:button_save) %>
+</p>
+
+<% end %> <!-- form_tag -->
+
+<script type="text/javascript">
+  function confirmRescan() {
+    let rescan = document.getElementById('changeset_relation_rescan');
+    rescan.value = window.confirm("<%= l(:label_rescan)  %>")
+  }
+
+  document.addEventListener('DOMContentLoaded', function(e) {
+    // リポジトリタブのみ表示する。
+    let changesetRelationSetting = document.getElementById('changeset_relation_setting');
+    let tab = document.getElementById('tab-content-repositories');
+    if (tab !== null) {
+      tab.appendChild(changesetRelationSetting);
+    } else {
+      changesetRelationSetting.style.display = 'none';
+    }
+
+    let submit = changesetRelationSetting.querySelector('input[type="submit"]');
+    submit.addEventListener('click', confirmRescan);
+  });
+</script>
+
+<% end %> <!-- if -->

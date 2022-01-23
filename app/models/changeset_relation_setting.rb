@@ -1,0 +1,8 @@
+# frozen_string_literal: true
+
+class ChangesetRelationSetting < ActiveRecord::Base
+  belongs_to :project
+  belongs_to :custom_field
+
+  validates :project, presence: true
+end
