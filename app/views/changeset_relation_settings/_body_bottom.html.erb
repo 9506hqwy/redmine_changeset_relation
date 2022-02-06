@@ -3,7 +3,8 @@
    if @project.present? &&
       controller &&
       controller.class.name == 'ProjectsController' &&
-      controller.action_name == 'settings'
+      controller.action_name == 'settings' &&
+      User.current.allowed_to?(:manage_repository, @project)
 %>
 
 <%

@@ -1,9 +1,13 @@
 # frozen_string_literal: true
 
 class ChangesetRelationSettingsController < ApplicationController
-  before_action :require_admin, :find_project_by_project_id
+  before_action :find_project_by_project_id
 
   def update
+    unless User.current.allowed_to?(:manage_repository, @project)
+      return deny_access
+    end
+
     setting = @project.changeset_relation_setting ||  ChangesetRelationSetting.new
 
     id = params[:changeset_relation_id]

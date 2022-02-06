@@ -139,7 +139,7 @@ class ChangesetRelationSettingsControllerTest < Redmine::ControllerTest
   end
 
   def test_update_deny_permission
-    @request.session[:user_id] = 2
+    @request.session[:user_id] = 3
 
     project = Project.find(1)
     put :update, params: {
