@@ -19,9 +19,10 @@
              method: 'PUT') do %>
 
 <div class="box">
+  <%= hidden_field_tag('changeset_relation_rescan', 'false') %>
+
   <p>
     <label for="changeset_relation_id"><%= l(:label_changeset_relation_id) %>:</label>
-    <%= hidden_field_tag('changeset_relation_rescan', 'false') %>
     <%= select_tag('changeset_relation_id',
                    options_for_select(custom_fields.collect {|c| [c.name, c.id]}, setting.custom_field_id),
                    include_blank: true)  %>

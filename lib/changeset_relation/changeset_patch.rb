@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module RedmineChangesetRelationSetting
+module RedmineChangesetRelation
   module ChangesetPatch
     def scan_comment_for_issue_ids
       return if comments.blank?
@@ -31,4 +31,4 @@ module RedmineChangesetRelationSetting
   end
 end
 
-Changeset.prepend RedmineChangesetRelationSetting::ChangesetPatch
+Changeset.prepend RedmineChangesetRelation::ChangesetPatch

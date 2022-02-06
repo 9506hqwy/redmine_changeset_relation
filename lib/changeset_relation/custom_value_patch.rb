@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module RedmineChangesetRelationSetting
+module RedmineChangesetRelation
   module CustomValuePatch
     def self.prepended(base)
       base.class_eval do
@@ -76,4 +76,4 @@ module RedmineChangesetRelationSetting
   end
 end
 
-CustomValue.prepend RedmineChangesetRelationSetting::CustomValuePatch
+CustomValue.prepend RedmineChangesetRelation::CustomValuePatch

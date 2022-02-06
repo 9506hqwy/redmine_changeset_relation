@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module RedmineChangesetRelationSetting
+module RedmineChangesetRelation
   module CustomFieldPatch
     def self.prepended(base)
       base.class_eval do
@@ -10,4 +10,4 @@ module RedmineChangesetRelationSetting
   end
 end
 
-CustomField.prepend RedmineChangesetRelationSetting::CustomFieldPatch
+CustomField.prepend RedmineChangesetRelation::CustomFieldPatch

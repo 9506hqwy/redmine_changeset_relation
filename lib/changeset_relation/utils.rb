@@ -1,7 +1,13 @@
 # frozen_string_literal: true
 
-module RedmineChangesetRelationSetting
+module RedmineChangesetRelation
   module Utils
+    if ActiveRecord::VERSION::MAJOR >= 5
+      Migration = ActiveRecord::Migration[4.2]
+    else
+      Migration = ActiveRecord::Migration
+    end
+
     def self.extract_references(message)
       kw =
         Setting.commit_ref_keywords.split(",") |

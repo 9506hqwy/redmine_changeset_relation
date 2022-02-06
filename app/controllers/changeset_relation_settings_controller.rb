@@ -13,14 +13,13 @@ class ChangesetRelationSettingsController < ApplicationController
       flash[:notice] = l(:notice_successful_update)
       redirect_to settings_project_path(@project, tab: :repositories)
     else
-      setting.project = @project
-      setting.custom_field = id.present? ? CustomField.find(id) : nil
+      setting.project_id = @project.id
+      setting.custom_field_id = id
 
       if setting.save
         rescan = params[:changeset_relation_rescan]
-        rescan = rescan.present? && !rescan.casecmp('false').zero?
 
-        clear_and_rescan(rescan)
+        clear_and_rescan(rescan == 'true')
 
         flash[:notice] = l(:notice_successful_update)
         redirect_to settings_project_path(@project, tab: :repositories)
