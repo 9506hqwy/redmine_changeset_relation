@@ -2,14 +2,14 @@
 
 module RedmineChangesetRelation
   module ChangesetPatch
-    def scan_comment_for_issue_ids
+    def scan_comment_for_issue_ids_or
       return if comments.blank?
 
       setting = project.changeset_relation_setting
       if setting && setting.custom_field_id.present?
         scan_comment_for_issue_ids_by(setting.custom_field_id)
-      else
-        super
+      elsif block_given?
+        yield
       end
     end
 
@@ -29,6 +29,36 @@ module RedmineChangesetRelation
                         value: custom_value)
     end
   end
+
+  module ChangesetPatch4
+    include ChangesetPatch
+
+    def self.included(base)
+      base.class_eval do
+        alias_method_chain(:scan_comment_for_issue_ids, :changeset_relation)
+      end
+    end
+
+    def scan_comment_for_issue_ids_with_changeset_relation
+      scan_comment_for_issue_ids_or do
+        scan_comment_for_issue_ids_without_changeset_relation
+      end
+    end
+  end
+
+  module ChangesetPatch5
+    include ChangesetPatch
+
+    def scan_comment_for_issue_ids
+      scan_comment_for_issue_ids_or do
+        super
+      end
+    end
+  end
 end
 
-Changeset.prepend RedmineChangesetRelation::ChangesetPatch
+if ActiveSupport::VERSION::MAJOR >= 5
+  Changeset.prepend RedmineChangesetRelation::ChangesetPatch5
+else
+  Changeset.include RedmineChangesetRelation::ChangesetPatch4
+end
