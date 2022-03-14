@@ -15,6 +15,7 @@ class ChangesetRelationSettingsControllerTest < Redmine::ControllerTest
            :custom_fields,
            :custom_fields_projects,
            :custom_values,
+           :enabled_modules,
            :issues,
            :member_roles,
            :members,

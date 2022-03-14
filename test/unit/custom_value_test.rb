@@ -7,11 +7,14 @@ require File.expand_path('../../test_helper', __FILE__)
 #        +---------> custom_field:2 --------------+
 
 class CustomValueTest < ActiveSupport::TestCase
-  fixtures :custom_fields,
+  fixtures :changesets,
+           :custom_fields,
            :custom_fields_projects,
            :custom_values,
            :issues,
            :projects,
+           :repositories,
+           :users,
            :changeset_relation_settings
 
   def test_changeset_relation_setting
