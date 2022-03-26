@@ -43,11 +43,11 @@ module RedmineChangesetRelation
     end
 
     def update_relation
-      if ActiveRecord::VERSION::MAJOR >= 5
-        return unless saved_change_to_value?
-      else
-        return unless value_changed?
-      end
+      # for Rails4
+      changed = changes.key?("value")
+      # for Rails5 or later
+      changed ||= previous_changes.key?("value")
+      return unless changed
 
       setting = changeset_relation_setting
       return if setting.blank?
