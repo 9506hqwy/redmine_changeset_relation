@@ -1,11 +1,19 @@
 # frozen_string_literal: true
 
-require_dependency 'changeset_relation/changeset_patch'
-require_dependency 'changeset_relation/custom_field_patch'
-require_dependency 'changeset_relation/custom_value_patch'
-require_dependency 'changeset_relation/project_patch'
-require_dependency 'changeset_relation/utils'
-require_dependency 'changeset_relation/view_listener'
+basedir = File.expand_path('../lib', __FILE__)
+libraries =
+  [
+    'redmine_changeset_relation/changeset_patch',
+    'redmine_changeset_relation/custom_field_patch',
+    'redmine_changeset_relation/custom_value_patch',
+    'redmine_changeset_relation/project_patch',
+    'redmine_changeset_relation/utils',
+    'redmine_changeset_relation/view_listener',
+  ]
+
+libraries.each do |library|
+  require_dependency File.expand_path(library, basedir)
+end
 
 Redmine::Plugin.register :redmine_changeset_relation do
   name 'Redmine Changeset Relation plugin'
