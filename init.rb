@@ -19,7 +19,7 @@ Redmine::Plugin.register :redmine_changeset_relation do
   name 'Redmine Changeset Relation plugin'
   author '9506hqwy'
   description 'This is a changeget relation using custom field plugin for Redmine'
-  version '0.1.0'
+  version '0.3.0'
   url 'https://github.com/9506hqwy/redmine_changeset_relation'
   author_url 'https://github.com/9506hqwy'
 end
