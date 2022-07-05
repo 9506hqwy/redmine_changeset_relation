@@ -21,11 +21,15 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-      with:
-        path: plugins
+    - name: Install essential
+      run: apt-get update && apt-get install -y build-essential
     - name: Setup environments
       run: |
-        apt-get update && apt-get install -y build-essential
+        PLUGIN_DIR=`pwd`
+        PLUGIN_NAME=`basename ${PLUGIN_DIR}`
+        cd /usr/src/redmine/plugins
+        ln -s ${PLUGIN_DIR} ${PLUGIN_NAME}
+        cd ..
         bundle install --with test
         sed -i -e 's/production/test/' config/database.yml
         rm sqlite/redmine.db
