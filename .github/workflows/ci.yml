@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+    tags-ignore: [ '*' ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        version: [3.4, 4.0, 4.1, 4.2, 5.0]
+
+    container:
+      image: redmine:${{ matrix.version }}
+      env:
+        RAILS_ENV: test
+
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        path: plugins
+    - name: Setup environments
+      run: |
+        apt-get update && apt-get install -y build-essential
+        bundle install --with test
+        sed -i -e 's/production/test/' config/database.yml
+        rm sqlite/redmine.db
+        bundle exec rake db:drop db:create db:migrate redmine:plugins:migrate
+        echo ja | bundle exec rake redmine:load_default_data
+    - name: Run tests
+      run: bundle exec rake redmine:plugins:test NAME=redmine_changeset_relation
