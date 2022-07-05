@@ -45,4 +45,6 @@ jobs:
         bundle exec rake db:drop db:create db:migrate redmine:plugins:migrate
         echo ja | bundle exec rake redmine:load_default_data
     - name: Run tests
-      run: bundle exec rake redmine:plugins:test NAME=redmine_changeset_relation
+      run: |
+        cd ${REDMINE_HOME}
+        bundle exec rake redmine:plugins:test NAME=redmine_changeset_relation
