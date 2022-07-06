@@ -13,7 +13,20 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        db: [postgres, sqlite3]
         version: ['3.4', '4.0', '4.1', '4.2', '5.0']
+
+    services:
+      postgres:
+        image: postgres:12-alpine
+        env:
+          POSTGRES_USER: redmine
+          POSTGRES_PASSWORD: password
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
     container:
       image: redmine:${{ matrix.version }}
@@ -25,7 +38,21 @@ jobs:
     - uses: actions/checkout@v3
     - name: Install essential
       run: apt-get update && apt-get install -y build-essential
-    - name: Create database.yml
+    - name: Create database.yml (PostgreSQL)
+      if: matrix.db == 'postgres'
+      run: |
+        cat > ${REDMINE_HOME}/config/database.yml <<EOF
+        test:
+          adapter: "postgresql"
+          host: "postgres"
+          port: 5432
+          username: "redmine"
+          password: "password"
+          database: "redmine"
+          encoding: "utf8"
+        EOF
+    - name: Create database.yml (SQLite3)
+      if: matrix.db == 'sqlite3'
       run: |
         cat > ${REDMINE_HOME}/config/database.yml <<EOF
         test:
