@@ -21,6 +21,7 @@ class ChangesetRelationSettingsControllerTest < Redmine::ControllerTest
            :members,
            :projects,
            :roles,
+           :repositories,
            :users,
            :changeset_relation_settings
 
