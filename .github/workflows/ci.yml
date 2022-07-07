@@ -85,8 +85,6 @@ jobs:
         cat > ${REDMINE_HOME}/config/database.yml <<EOF
         test:
           adapter: "sqlite3"
-          host: "localhost"
-          username: "redmine"
           database: "sqlite/redmine.db"
           encoding: "utf8"
         EOF
@@ -94,6 +92,7 @@ jobs:
       run: |
         PLUGIN_DIR=`pwd`
         PLUGIN_NAME=`basename ${PLUGIN_DIR}`
+        echo "PLUGIN_NAME=${PLUGIN_NAME}" >> $GITHUB_ENV
         cd ${REDMINE_HOME}/plugins
         ln -s ${PLUGIN_DIR} ${PLUGIN_NAME}
         cd ..
@@ -103,4 +102,4 @@ jobs:
     - name: Run tests
       run: |
         cd ${REDMINE_HOME}
-        bundle exec rake redmine:plugins:test NAME=redmine_changeset_relation
+        bundle exec rake redmine:plugins:test NAME=${PLUGIN_NAME}
