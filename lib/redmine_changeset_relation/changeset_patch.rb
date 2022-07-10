@@ -18,6 +18,7 @@ module RedmineChangesetRelation
         .map{|(a, r)| find_custom_values_by_value(custom_field_id, r)}
         .flatten
         .map{|cv| find_referenced_issue_by_id(cv.customized_id)}
+        .reject{|i| i.nil?}
         .uniq
     end
 
