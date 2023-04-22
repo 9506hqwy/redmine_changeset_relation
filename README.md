@@ -37,4 +37,4 @@ This plugin provides a relation between changeset and issue using custom field i
 
 ## Notes
 
-The link text in commit message is not changed. This link destination is original.
+The issue number in commit message is link only if issue exists in redmine.

@@ -1,3 +1,49 @@
+<!-- Issue 表示 -->
+<%
+   if @project.present? &&
+      controller &&
+      controller.class.name == 'IssuesController' &&
+      controller.action_name == 'show'
+
+   setting =  @project.changeset_relation_setting
+
+   if setting.present? && setting.custom_field.present?
+%>
+
+<script type="text/javascript">
+  function changeRelationLink(link) {
+    const id = link.innerText.slice(1);
+    link.title = '';
+    link.href = '<%= setting.custom_field.format_store['url_pattern'] %>'.replace('%value%', id);
+  }
+
+  document.addEventListener('DOMContentLoaded', function(e) {
+    // Redmine3
+    const changesets = document.getElementById('issue-changesets');
+    if (changesets != null) {
+      for (const link of changesets.querySelectorAll('a.issue')) {
+        changeRelationLink(link);
+      }
+    }
+
+    // Redmine4 or later
+    const tab = document.getElementById('tab-content-changesets');
+    if (tab != null) {
+      // TODO: MutationObserver ?
+      tab.addEventListener('DOMSubtreeModified', function(e) {
+        if (e.target == tab) {
+          for (const link of tab.querySelectorAll('a.issue')) {
+            changeRelationLink(link);
+          }
+        }
+      });
+    }
+  });
+</script>
+
+<% end %> <!-- if -->
+<% end %> <!-- if -->
+
 <!-- プロジェクト設定のリポジトリタブ表示 -->
 <%
    if @project.present? &&
