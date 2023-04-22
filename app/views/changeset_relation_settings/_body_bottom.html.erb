@@ -130,6 +130,12 @@
         changeRelationLink(link);
       }
     }
+
+    for (const comment of document.querySelectorAll('div.changeset-comments')) {
+      for (const link of comment.querySelectorAll('a.issue')) {
+        changeRelationLink(link);
+      }
+    }
   });
 </script>
 
