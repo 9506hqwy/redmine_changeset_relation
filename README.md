@@ -2,6 +2,10 @@
 
 This plugin provides a relation between changeset and issue using custom field instead of issue's id.
 
+This plugin is based on `Referencing and fixing issues in commit messages` function.
+So need to contains reference value in commit message.
+If custom field in the issue has same reference value, the changeset is related to the issue.
+
 ## Installation
 
 1. Download plugin in Redmine plugin directory.
@@ -17,10 +21,14 @@ This plugin provides a relation between changeset and issue using custom field i
 ## Configuration
 
 1. Create issue's custom field.
+   Issue's custom field visibility is `to any users`.
 
-2. Set custom field in project repository setting.
+2. Set custom field at repository tab on project settings.
 
 3. If re-create relation, Click [OK] on popup after clicking save button.
+
+4. Input reference value into custom field on issue editing.
+   Changeset that commit message has same reference value is related to the issue.
 
 ## Tested Environment
 
