@@ -38,6 +38,7 @@ If custom field in the issue has same reference value, the changeset is related 
   * 4.1
   * 4.2
   * 5.0
+  * 5.1
 * Database
   * SQLite
   * MySQL 5.7
