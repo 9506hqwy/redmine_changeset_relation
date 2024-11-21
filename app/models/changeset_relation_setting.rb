@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ChangesetRelationSetting < ActiveRecord::Base
+class ChangesetRelationSetting < RedmineChangesetRelation::Utils::ModelBase
   belongs_to :project
   belongs_to :custom_field
 

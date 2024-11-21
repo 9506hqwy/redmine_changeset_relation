@@ -8,6 +8,13 @@ module RedmineChangesetRelation
       Migration = ActiveRecord::Migration
     end
 
+    if defined?(ApplicationRecord)
+      # https://www.redmine.org/issues/38975
+      ModelBase = ApplicationRecord
+    else
+      ModelBase = ActiveRecord::Base
+    end
+
     def self.extract_references(message)
       kw =
         Setting.commit_ref_keywords.split(",") |
