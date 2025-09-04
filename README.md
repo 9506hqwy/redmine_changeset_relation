@@ -9,13 +9,17 @@ If custom field in the issue has same reference value, the changeset is related 
 ## Installation
 
 1. Download plugin in Redmine plugin directory.
+
    ```sh
    git clone https://github.com/9506hqwy/redmine_changeset_relation.git
    ```
+
 2. Install plugin in Redmine directory.
+
    ```sh
    bundle exec rake redmine:plugins:migrate NAME=redmine_changeset_relation RAILS_ENV=production
    ```
+
 3. Start Redmine
 
 ## Configuration
@@ -33,7 +37,6 @@ If custom field in the issue has same reference value, the changeset is related 
 ## Tested Environment
 
 * Redmine (Docker Image)
-  * 3.4
   * 4.0
   * 4.1
   * 4.2
@@ -43,7 +46,7 @@ If custom field in the issue has same reference value, the changeset is related 
 * Database
   * SQLite
   * MySQL 5.7 or 8.0
-  * PostgreSQL 12
+  * PostgreSQL 14
 
 ## Notes
 
