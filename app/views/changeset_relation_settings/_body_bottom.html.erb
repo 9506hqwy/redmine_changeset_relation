@@ -29,14 +29,16 @@
     // Redmine4 or later
     const tab = document.getElementById('tab-content-changesets');
     if (tab != null) {
-      // TODO: MutationObserver ?
-      tab.addEventListener('DOMSubtreeModified', function(e) {
-        if (e.target == tab) {
-          for (const link of tab.querySelectorAll('a.issue')) {
-            changeRelationLink(link);
+      const observer = new MutationObserver(function(mutationsList) {
+        for (const mutation of mutationsList) {
+          if (mutation.type == 'childList') {
+            for (const link of tab.querySelectorAll('a.issue')) {
+              changeRelationLink(link);
+            }
           }
         }
       });
+      observer.observe(tab, { childList: true });
     }
   });
 </script>
